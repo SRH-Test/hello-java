@@ -29,6 +29,7 @@ jobs:
         polaris_prComment_enabled: 'true'
         polaris_reports_sarif_create: 'true'
         polaris_upload_sarif_report: 'true'
+        BRIDGE_POLARIS_PRCOMMENT_SEVERITIES: ["high", "critical", "medium"]
         github_token: ${{ secrets.GITHUB_TOKEN }}
         # include_diagnostics: true
 #    - name: Save Logs
