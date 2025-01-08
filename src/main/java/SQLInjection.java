@@ -7,5 +7,6 @@ public class SQLInjection {
     String query = "SELECT account_balance FROM user_data WHERE user_name = " + customerName;
     Statement statement = connection.createStatement();
     ResultSet results = statement.executeQuery(query);
+    return(results);
   }
 }
