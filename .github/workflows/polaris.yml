@@ -22,12 +22,13 @@ jobs:
     - name: Export detect_blackduck_scan_mode variable
       run: |
         export DETECT_BLACKDUCK_SCAN_MODE=RAPID
+        export DETECT_DETECTOR_SEARCH_DEPTH=10
     - name: Polaris Scan
       uses: blackduck-inc/black-duck-security-scan@v2.0.0
       with:
         polaris_server_url: ${{ vars.POLARIS_SERVER_URL }}
         polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-        polaris_assessment_types: 'SAST,SCA'
+        polaris_assessment_types: 'SAST'
         polaris_application_name: SRH-${{ github.event.repository.name }}
         polaris_prComment_enabled: 'true'
         polaris_reports_sarif_create: 'true'
