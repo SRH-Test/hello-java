@@ -34,7 +34,7 @@ jobs:
         polaris_reports_sarif_create: 'true'
         polaris_upload_sarif_report: 'true'
         bridge_polaris_prcomment_severities: '["high", "critical", "medium"]'
-        detect_args: 'detect.excluded.detector.types=MAVEN'
+        detect_args: '--detect.excluded.detector.types=MAVEN'
         github_token: ${{ secrets.GITHUB_TOKEN }}
         # include_diagnostics: true
 #    - name: Save Logs
