@@ -34,6 +34,7 @@ jobs:
         polaris_reports_sarif_create: 'true'
         polaris_upload_sarif_report: 'true'
         bridge_polaris_prcomment_severities: '["high", "critical", "medium"]'
+        BRIDGE_DETECT_ARGS: 'detect_detector_search_depth=10'
         github_token: ${{ secrets.GITHUB_TOKEN }}
         # include_diagnostics: true
 #    - name: Save Logs
