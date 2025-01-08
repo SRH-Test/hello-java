@@ -21,7 +21,7 @@ jobs:
         cache: maven
     - name: Export detect_blackduck_scan_mode variable
       run: |
-        export detect_blackduck_scan_mode=RAPID
+        export DETECT_BLACKDUCK_SCAN_MODE=RAPID
     - name: Polaris Scan
       uses: blackduck-inc/black-duck-security-scan@v2.0.0
       with:
