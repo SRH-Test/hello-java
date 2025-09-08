@@ -167,7 +167,8 @@ class PolarisAPI:
             # Make PATCH request to update branch with correct headers
             headers = {
                 'Content-Type': 'application/vnd.polaris.portfolios.branches-1+json',
-                'Api-token': self.access_token
+                'Api-Token': self.access_token,  # Changed from 'Api-token' to 'Api-Token'
+                'organization-id': self.org_id
             }
             
             response = self._make_request(
