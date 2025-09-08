@@ -20,7 +20,7 @@ jobs:
         distribution: microsoft
         cache: maven
     - name: Polaris Scan
-      uses: blackduck-inc/black-duck-security-scan@v2.0.0
+      uses: blackduck-inc/black-duck-security-scan@v2.4.0
       with:
         polaris_server_url: ${{ vars.POLARIS_SERVER_URL }}
         polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
