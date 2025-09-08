@@ -20,17 +20,15 @@ jobs:
         distribution: microsoft
         cache: maven
     - name: Polaris Scan
-      uses: blackduck-inc/black-duck-security-scan@v2.0.0
+      uses: blackduck-inc/black-duck-security-scan@v2.4.0
       with:
         polaris_server_url: ${{ vars.POLARIS_SERVER_URL }}
         polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
         polaris_assessment_types: 'SAST,SCA'
         polaris_application_name: SRH-${{ github.event.repository.name }}
-        polaris_prComment_enabled: 'true'
-        polaris_reports_sarif_create: 'true'
-        polaris_upload_sarif_report: 'true'
-        bridge_polaris_prcomment_severities: '["high", "critical", "medium"]'
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        polaris_project_name: hello-java
+        polaris_branch_name: main
+        polaris_test_sast_type: SAST-RAPID
         # include_diagnostics: true
 #    - name: Save Logs
 #      if: always()
