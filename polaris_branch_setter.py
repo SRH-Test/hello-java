@@ -45,14 +45,24 @@ class PolarisAPI:
         """Make a request to the Polaris API with error handling."""
         url = urljoin(self.server_url + '/', endpoint.lstrip('/'))
         
+        print(f"Making {method} request to: {url}")
+        print(f"Headers: {dict(self.session.headers)}")
+        
         try:
             response = self.session.request(method, url, **kwargs)
+            print(f"Response status: {response.status_code}")
+            
+            if response.status_code != 200:
+                print(f"Response headers: {dict(response.headers)}")
+                print(f"Response text: {response.text}")
+            
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
             print(f"API request failed: {e}")
             if hasattr(e, 'response') and e.response is not None:
                 print(f"Response status: {e.response.status_code}")
+                print(f"Response headers: {dict(e.response.headers)}")
                 print(f"Response text: {e.response.text}")
             raise
 
