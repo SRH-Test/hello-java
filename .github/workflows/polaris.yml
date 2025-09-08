@@ -55,7 +55,7 @@ jobs:
           POLARIS_ORGANIZATION_ID: ${{ vars.POLARIS_ORGANIZATION_ID }}  # Optional
           POLARIS_APPLICATION_NAME: SRH-${{ github.event.repository.name }}
           POLARIS_PROJECT_NAME: hello-java
-          POLARIS_BRANCH_NAME: new
+          POLARIS_BRANCH_NAME: new2
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python polaris_branch_setter.py
