@@ -30,26 +30,38 @@ class PolarisAPI:
     def __init__(self, server_url: str, access_token: str, org_id: str = None):
         self.server_url = server_url.rstrip('/')
         self.access_token = access_token
-        self.org_id = org_id
-        self.session = requests.Session()
-        self.session.headers.update({
-            'Authorization': f'Bearer {access_token}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        })
+        self.org_id = org_id or "91ab7a67-1345-4c9a-8979-1d87037a930c"  # Default from HAR file
         
-        if org_id:
-            self.session.headers['organization-id'] = org_id
+        print(f"Initialized Polaris API client")
+        print(f"Server: {self.server_url}")
+        print(f"Using organization ID: {self.org_id}")
+
+    def _get_headers(self, extra_headers: Dict[str, str] = None) -> Dict[str, str]:
+        """Get headers for API requests."""
+        headers = {
+            'Api-Token': self.access_token,
+            'Accept': 'application/json',
+            'organization-id': self.org_id
+        }
+        
+        if extra_headers:
+            headers.update(extra_headers)
+            
+        return headers
 
     def _make_request(self, method: str, endpoint: str, **kwargs) -> requests.Response:
         """Make a request to the Polaris API with error handling."""
         url = urljoin(self.server_url + '/', endpoint.lstrip('/'))
         
+        # Get headers for this request
+        extra_headers = kwargs.pop('headers', {})
+        headers = self._get_headers(extra_headers)
+        
         print(f"Making {method} request to: {url}")
-        print(f"Headers: {dict(self.session.headers)}")
+        print(f"Headers: {headers}")
         
         try:
-            response = self.session.request(method, url, **kwargs)
+            response = requests.request(method, url, headers=headers, **kwargs)
             print(f"Response status: {response.status_code}")
             
             if response.status_code != 200:
@@ -157,25 +169,34 @@ class PolarisAPI:
             response = self._make_request('GET', endpoint)
             branch_data = response.json()
             
-            # Update to set as default
-            branch_data['isDefault'] = True
+            # Create the payload matching your working curl command
+            patch_payload = {
+                "name": branch_data.get("name", branch_name),
+                "description": branch_data.get("description", ""),
+                "source": branch_data.get("source", "CI"),
+                "isDefault": True,
+                "autoDeleteSetting": branch_data.get("autoDeleteSetting", False),
+                "autoDeleteSettingsCustomized": branch_data.get("autoDeleteSettingsCustomized", False),
+                "branchRetentionPeriodSetting": branch_data.get("branchRetentionPeriodSetting", 0)
+            }
             
-            # Remove fields that shouldn't be in the PATCH request
-            for field in ['_links', 'id']:
-                branch_data.pop(field, None)
+            # Add labelIds if present in the original data
+            if "labelIds" in branch_data:
+                patch_payload["labelIds"] = branch_data["labelIds"]
+            
+            print(f"PATCH payload: {json.dumps(patch_payload, indent=2)}")
             
             # Make PATCH request to update branch with correct headers
-            headers = {
-                'Content-Type': 'application/vnd.polaris.portfolios.branches-1+json',
-                'Api-Token': self.access_token,  # Changed from 'Api-token' to 'Api-Token'
-                'organization-id': self.org_id
+            patch_headers = {
+                'Accept': 'application/vnd.polaris.portfolios.branches-1+json',
+                'Content-Type': 'application/vnd.polaris.portfolios.branches-1+json'
             }
             
             response = self._make_request(
                 'PATCH', 
                 endpoint, 
-                json=branch_data,
-                headers=headers
+                json=patch_payload,
+                headers=patch_headers
             )
             
             print(f"Successfully set '{branch_name}' as default branch")
