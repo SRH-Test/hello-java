@@ -30,11 +30,11 @@ class PolarisAPI:
     def __init__(self, server_url: str, access_token: str, org_id: str = None):
         self.server_url = server_url.rstrip('/')
         self.access_token = access_token
-        self.org_id = org_id or "91ab7a67-1345-4c9a-8979-1d87037a930c"  # Default from HAR file
+        # Don't store org_id since your working curl doesn't use it
         
         print(f"Initialized Polaris API client")
         print(f"Server: {self.server_url}")
-        print(f"Using organization ID: {self.org_id}")
+        print(f"Not using organization-id header (matching working curl)")
 
     def _get_headers(self, extra_headers: Dict[str, str] = None) -> Dict[str, str]:
         """Get headers for API requests."""
@@ -260,7 +260,7 @@ def main():
     print(f"Branch name: {polaris_branch_name}")
     
     # Initialize Polaris API client
-    api = PolarisAPI(polaris_server_url, polaris_access_token, org_id)
+    api = PolarisAPI(polaris_server_url, polaris_access_token)
     
     # Find the project
     project_data = api.find_project_by_name(polaris_application_name, polaris_project_name)
