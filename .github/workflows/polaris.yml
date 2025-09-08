@@ -29,7 +29,7 @@ jobs:
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
           polaris_assessment_types: 'SAST,SCA'
           polaris_test_sast_type: SAST-RAPID
-          polaris_application_name: SRH-${{ github.event.repository.name }}
+          polaris_application_name: srh-${{ github.event.repository.name }}
           polaris_project_name: hello-java
           polaris_branch_name: new
           polaris_waitforscan: false
