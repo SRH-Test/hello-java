@@ -154,9 +154,10 @@ class PolarisAPI:
             for field in ['_links', 'id']:
                 branch_data.pop(field, None)
             
-            # Make PATCH request to update branch
+            # Make PATCH request to update branch with correct headers
             headers = {
-                'Content-Type': 'application/vnd.polaris.portfolios.branches-1+json'
+                'Content-Type': 'application/vnd.polaris.portfolios.branches-1+json',
+                'Api-token': self.access_token
             }
             
             response = self._make_request(
