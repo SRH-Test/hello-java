@@ -28,6 +28,7 @@ jobs:
         polaris_application_name: SRH-${{ github.event.repository.name }}
         polaris_project_name: hello-java
         polaris_branch_name: main
+        polaris_test_sast_type: SAST-RAPID
         # include_diagnostics: true
 #    - name: Save Logs
 #      if: always()
