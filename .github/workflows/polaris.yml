@@ -28,11 +28,6 @@ jobs:
         polaris_application_name: SRH-${{ github.event.repository.name }}
         polaris_project_name: hello-java
         polaris_branch_name: main
-        polaris_prComment_enabled: 'true'
-        polaris_reports_sarif_create: 'true'
-        polaris_upload_sarif_report: 'true'
-        bridge_polaris_prcomment_severities: '["high", "critical", "medium"]'
-        github_token: ${{ secrets.GITHUB_TOKEN }}
         # include_diagnostics: true
 #    - name: Save Logs
 #      if: always()
