@@ -31,7 +31,7 @@ jobs:
           polaris_test_sast_type: SAST-RAPID
           polaris_application_name: srh-${{ github.event.repository.name }}
           polaris_project_name: hello-java
-          polaris_branch_name: new
+          polaris_branch_name: new2
           polaris_waitforscan: false
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
