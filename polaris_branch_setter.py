@@ -11,7 +11,6 @@ Environment Variables Required:
 - POLARIS_APPLICATION_NAME: The application name (e.g., SRH-hello-java)
 - POLARIS_PROJECT_NAME: The project name (e.g., hello-java)
 - POLARIS_BRANCH_NAME: The branch name to set as default (e.g., new)
-- POLARIS_ORGANIZATION_ID: Organization ID (optional)
 
 Usage:
     python polaris_branch_setter.py
@@ -27,21 +26,18 @@ from urllib.parse import urljoin
 
 
 class PolarisAPI:
-    def __init__(self, server_url: str, access_token: str, org_id: str = None):
+    def __init__(self, server_url: str, access_token: str):
         self.server_url = server_url.rstrip('/')
         self.access_token = access_token
-        # Don't store org_id since your working curl doesn't use it
         
         print(f"Initialized Polaris API client")
         print(f"Server: {self.server_url}")
-        print(f"Not using organization-id header (matching working curl)")
 
     def _get_headers(self, extra_headers: Dict[str, str] = None) -> Dict[str, str]:
         """Get headers for API requests."""
         headers = {
             'Api-Token': self.access_token,
-            'Accept': 'application/json',
-            'organization-id': self.org_id
+            'Accept': 'application/json'
         }
         
         if extra_headers:
@@ -244,7 +240,6 @@ def main():
     polaris_application_name = os.getenv('POLARIS_APPLICATION_NAME')
     polaris_project_name = os.getenv('POLARIS_PROJECT_NAME')
     polaris_branch_name = os.getenv('POLARIS_BRANCH_NAME')
-    org_id = os.getenv('POLARIS_ORGANIZATION_ID')  # Optional
     
     if not all([polaris_server_url, polaris_access_token, polaris_application_name, polaris_project_name, polaris_branch_name]):
         print("Error: Missing required environment variables:")
