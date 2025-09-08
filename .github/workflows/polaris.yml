@@ -32,6 +32,7 @@ jobs:
           polaris_application_name: SRH-${{ github.event.repository.name }}
           polaris_project_name: hello-java
           polaris_branch_name: new
+          polaris_waitforscan: false
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Python for Polaris Branch Setter
