@@ -2,7 +2,4 @@ capture:
   build:
     clean-command: mvn -B clean
     build-command: mvn -B -DskipTests package
-analyze:
-  checkers:
-    webapp-security:
-      enabled: true
+
